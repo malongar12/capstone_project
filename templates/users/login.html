@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="text-center mt-5 container">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {{message}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+      </button>
+</div>
+  {% endfor %}
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5">
+      <h2 class="join-message"/> Welcome back.</h2>
+      <form method="POST" id="user_form">
+        {{ form.hidden_tag() }}
+  
+        {% for field in form if field.widget.input_type != 'hidden' %}
+          {% for error in field.errors %}
+            <span class="text-danger">{{ error }}</span>
+          {% endfor %}
+          {{ field(placeholder=field.label.text, class="form-control") }}
+        {% endfor %}
+
+        <div>
+          <span>Don't have an account? <a href = "/signup">Signup</span>
+        </div>
+        <br>
+  
+        <button style="background-color: #5072a7";  class="btn btn-primary btn-lg btn-block">Login</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock content %}

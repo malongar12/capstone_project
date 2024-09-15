@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center mt-5 container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+        </button>
+  </div>
+    {% endfor %}
+    {% if book %}
+    <hr style="border: 3px solid white; border-radius: 5px;" />
+    <br>
+    <table class="table table-bordered" id='data'>
+        <thead>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="row">{{ book.id }}</td>
+                <td>{{ book.name }}</td>
+                <td>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" size="lg" rows="10" readonly
+                    style="overflow:hidden";
+                    
+                    
+                    >{{book.description}}</textarea>
+                </td>
+
+        </tbody>
+    </table>
+    {% endif %}
+
+    <a href= "/book/{{book.id}}/issue">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{book.id}}" style="background-color:#5072a7";>
+            Check Out
+        </button>
+
+    </a>
+
+    
+
+    
+</div>
+<br>
+{% endblock content %}

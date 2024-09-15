@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if book_1%}
+
+
+<div class="text-center mt-5 container">
+
+     <h1 class='display-4 text-center'>Your issued books</h1><br>
+     <table class="table  table-bordered">
+          <thead>
+               <th scope="col">Book id</th>
+               <th scope="col">Name</th>
+               <th scope="col">Author</th>
+               <th scope="col">Date issued</th>
+               <th class="col">Date of Return</th>
+               <th scope="col">Issued By</th>
+          </thead>
+          <tbody>
+               <tr>
+                    <td scope='row'>{{ book_1.book }}</td>
+                    <td scope='row'>{{book_1.posts.name }}</td>
+                    <td scope='row'>{{book_1.posts.author }}</td>
+                    <td scope='row'>{{ book_1.date_issued }}</td>
+                    <td scope='row'>{{ book_1.date_return }}</td>
+                    <td scope='row'>{{ book_1.issue.first_name}}</td>
+               </tr>
+          </tbody>
+     </table>
+
+
+     <a href= "/book/{{book_1.book}}/return">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{book_1.id}}" style="background-color:#5072a7";>
+          Return
+          </button>
+  
+      </a>
+     
+  
+</div>
+{% endif %}
+{% endblock %}

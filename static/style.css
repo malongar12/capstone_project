@@ -1,0 +1,126 @@
+
+/* ====================== General */
+
+
+
+.form-control {
+  margin-bottom: 20px;
+}
+
+.btn {
+  border-radius: 50px;
+  background-color: #5072a7;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+
+
+
+
+
+#search.form-control {
+  border-radius: 20px;
+  margin-bottom: 0;
+  width: 100%;
+  font-size: 13px;
+  padding-right: 28px;
+  box-sizing: border-box;
+}
+
+#search.form-control + .btn {
+  position: absolute;
+  right: 9px;
+  top: 2px;
+  bottom: 4px;
+  z-index: 1;
+  padding: 0;
+  color: #66757f;
+}
+
+#search.form-control + .btn:active,
+#search.form-control + .btn:focus {
+  box-shadow: none;
+}
+
+#search:active,
+#search:focus {
+  box-shadow: none;
+  border: 2px solid #007bff;
+}
+
+/* on "onboarding" pages (signup & login), the navbar is
+   different: no search box, the logo is centered, and it has
+   a background color.
+ */
+
+
+
+
+@media (max-width: 468px) {
+  nav form.navbar-form {
+    display: none;
+  }
+}
+
+nav + .container {
+  margin-bottom: 1rem;
+}
+
+/* ===================== User profile */
+
+
+
+.full-width {
+  width: 100vw;
+  margin: 0 -50vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+}
+
+.row.full-width {
+  background-color: #fff;
+  margin-top: -80px;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+  height: 60px;
+  align-items: center;
+}
+
+
+
+@media (max-width: 768px) {
+  .full-width .user-stats .stat {
+    display: none;
+  }
+}
+
+.user-location {
+  color: #657786;
+}
+
+
+#user_form input.form-control {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px;
+}
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #62676c;
+}
+
+
+
+body{
+  padding: 0px;
+}

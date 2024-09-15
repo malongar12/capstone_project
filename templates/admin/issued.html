@@ -1,0 +1,42 @@
+{% extends "admin/admin_navbar.html" %}
+
+
+
+{% block content %}
+{% if all_issued_book  %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Book id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Date issued</th>
+        <th scope="col">Return</th>
+        <th scope="col">issued by</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for  copy in all_issued_book   %}
+      <tr>
+        <th scope="row">{{copy.book}}</th>
+        <td>{{copy.posts.name}}</td>
+        <td>{{copy.date_issued}}</td>
+        <td>{{copy.date_return}}</td>
+        <td>{{copy.issue.name}}</td>
+
+
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+
+  <div>
+    <h2>There is no book borrow currently</h2>
+  </div>
+
+  {% endif %}
+
+
+  {% endblock content %}

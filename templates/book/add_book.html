@@ -1,0 +1,46 @@
+{% extends "admin/admin_navbar.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+
+<form  class='text-center mt-5 container'  style="width: 40%;"   action='/books/add' method='POST'>
+     {% for message in get_flashed_messages() %}
+     <div class='alert alert-warning'>
+          <button type='button' class='close' data-dismiss='alert'>&times;</button>
+          {{message}}
+     </div>
+     {% endfor %}
+     <h1 class='display-4 text-center'>Add Book</h1><br>
+     <div class="input-group mb-3">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+
+
+          {{ form.hidden_tag() }}
+
+        {% for field in form if field.widget.input_type != 'hidden' %}
+          {% for error in field.errors %}
+            <span class="text-danger">{{ error }}</span>
+          {% endfor %}
+          
+    
+
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            {{ field(placeholder=field.label.text, class="form-control") }}
+       </div>
+          
+        {% endfor %}
+
+        <button style="background-color: #5072a7"; class="btn btn-primary btn-lg btn-block    align-content-center ">Add</button>
+         
+     </div>
+
+    
+    
+     
+</form>
+
+{% endblock %}
