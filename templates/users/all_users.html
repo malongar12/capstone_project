@@ -11,6 +11,7 @@
         <th scope="col">first name</th>
         <th scope="col">last name</th>
         <th scope="col">Email</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +21,15 @@
         <td>{{user.first_name}}</td>
         <td>{{user.last_name}}</td>
         <td>{{user.email}}</td>
+
+        <td>
+          <a href= "/user/{{user.id}}/delete">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{user.id}}" style="background-color:red";>
+                Delete User
+            </button>
+    
+        </a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

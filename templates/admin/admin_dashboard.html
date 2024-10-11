@@ -31,6 +31,7 @@
                <th scope="col">Author</th>
                <th scope="col">Description</th>
                <th scope="col">Total Copies</th>
+               <th scope="col">Remove book</th>
           </thead>
           <tbody>
                {% for book in books %}
@@ -40,6 +41,12 @@
                     <td>{{book.author}}</td>
                     <td>{{ book.description }}</td>
                     <td>{{ book.total_copy }}</td>
+                    <td> <a href= "/book/{{book.id}}/delete">
+                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{book.id}}" style="background-color:red";>
+                             delete
+                         </button>
+                 
+                     </a></td>
                    
                </tr>
                {% endfor %}

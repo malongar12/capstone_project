@@ -2,7 +2,7 @@
 {% block title %}Admin Dashboard{% endblock %}
 {% block content %}
 
-<form  class='text-center mt-5 container'  style="width: 40%;"   action='/books/add' method='POST'>
+<form  class='text-center mt-5 container'  style="width: 40%;"   action='/book/add' method='POST'>
      {% for message in get_flashed_messages() %}
      <div class='alert alert-warning'>
           <button type='button' class='close' data-dismiss='alert'>&times;</button>

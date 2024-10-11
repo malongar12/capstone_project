@@ -38,7 +38,8 @@ class admin_loginForm(FlaskForm):
     
     
 class addBook(FlaskForm):
-    name = StringField("Name", validators=[InputRequired()])
+    title = StringField("title", validators=[InputRequired()])
     author = StringField("Author", validators=[InputRequired()])
     description = TextAreaField("Description", validators=[InputRequired()])
+    Copies = StringField("copies", validators=[InputRequired()])
     
