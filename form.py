@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField, URLField, IntegerField, TextAreaField
-from wtforms.validators import InputRequired, Length, NumberRange, URL, Optional
+from wtforms.validators import InputRequired, Length, NumberRange, URL, Optional, Length, Regexp
 
 
 
@@ -8,8 +8,12 @@ from wtforms.validators import InputRequired, Length, NumberRange, URL, Optional
 
 
 class signupForm(FlaskForm):
-    first_name = StringField("first name", validators=[InputRequired()])
-    last_name = StringField("last name", validators=[InputRequired()])
+    first_name = StringField("first name", validators=[InputRequired(),  Length(min=3, max=50),
+        Regexp('^[A-Za-z]*$', message="Only alphabetic characters are allowed.")])
+    
+    last_name = StringField("last name", validators=[InputRequired(), Length(min=3, max=50), 
+        Regexp('^[A-Za-z]*$', message="Only alphabetic characters are allowed.")])
+    
     email = EmailField("email", validators=[InputRequired()])
     password = PasswordField("password", validators=[InputRequired()])
     
@@ -21,10 +25,13 @@ class loginForm(FlaskForm):
     
     
     
-    
 class AdminSignupForm(FlaskForm):
-    first_name = StringField("first name", validators=[InputRequired()])
-    last_name = StringField("last name", validators=[InputRequired()])
+    first_name = StringField("first name", validators=[InputRequired(),Length(min=3, max=50), 
+        Regexp('^[A-Za-z]*$', message="Only alphabetic characters are allowed.")])
+    
+    last_name = StringField("last name", validators=[InputRequired(), Length(min=3, max=50), 
+        Regexp('^[A-Za-z]*$', message="Only alphabetic characters are allowed.")])
+    
     email = EmailField("email", validators=[InputRequired()])
     password = PasswordField("password", validators=[InputRequired()])
     Admin = StringField("Create a Pin", validators=[InputRequired()])
