@@ -20,7 +20,7 @@
             <th scope="col">Details</th>
         </thead>
         <tbody>
-            {% for book in books %}
+            {% for book in books.items %}
             <tr>
                 <td scope="row">{{ book.id }}</td>
                 <td>{{ book.name }}</td>
@@ -37,6 +37,13 @@
         </tbody>
     </table>
     {% endif %}
+    {% if books.has_prev %}
+    <a href="{{ url_for('books', page=books.prev_num) }}">Previous</a>
+{% endif %}
+<span>Page {{ books.page }} of {{ books.pages }}</span>
+{% if books.has_next %}
+            <a href="{{ url_for('books', page=books.next_num) }}">Next</a>
+        {% endif %}
 </div>
 
 

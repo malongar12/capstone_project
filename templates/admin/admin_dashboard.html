@@ -52,6 +52,13 @@
                {% endfor %}
           </tbody>
      </table>
+     {% if books.has_prev %}
+    <a href="{{ url_for('admin_dashboard', page=books.prev_num) }}">Previous</a>
+{% endif %}
+<span>Page {{ books.page }} of {{ books.pages }}</span>
+{% if books.has_next %}
+            <a href="{{ url_for('admin_dashboard', page=books.next_num) }}">Next</a>
+        {% endif %}
 </div>
 {% endif %}
 {% endblock %}

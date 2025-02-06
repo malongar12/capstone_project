@@ -2,40 +2,31 @@ import requests
 from models import db
 from models import Book
 from secret import API_KEY
-
+from app import app 
 
 
 response= requests.get(f"https://www.googleapis.com/books/v1/volumes?q=search-terms&key={API_KEY} &maxResults=40")
-data = response.json()
-res = response.json()
-data = res["items"]
 
+if response.status_code == 200:
+    res = response.json()
+    data = res["items"] or []
+    print(data)
 
-for volume in data:
-    title = volume["volumeInfo"]["title"]
-    #description = volume["volumeInfo"]["description"]
-    
-    if "volumeInfo" in volume and "description" in volume["volumeInfo"]:
-      description = volume["volumeInfo"]["description"]
+    with app.app_context():
+        for volume in data:
+                title = volume["volumeInfo"].get("title", "No title available")
+                description = volume["volumeInfo"].get("description", "Description not available")
+                authors = volume["volumeInfo"].get("authors", [])
+                
+                for author in authors:
+                    book = Book(name=title, author=author, description=description)
+                db.session.add(book)
+                db.session.commit()
+
 else:
-    
-    description = "Description not available"
-    
-if "authors" in volume.get("volumeInfo", {}):
-    authors = volume["volumeInfo"]["authors"]
-else:
-    # Handle the case where 'authors' is not present
-    authors = []  # Or another default value
+    print(f"bad request with a status code of {response.status_code}")
 
 
-    book = Book(name= title, author= authors, description=description)
-    db.session.add(book)
-    db.session.commit()
-    
-    
-
-     
-    
 
 
          

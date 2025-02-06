@@ -124,3 +124,8 @@ nav + .container {
 body{
   padding: 0px;
 }
+
+h2{
+  text-align: center;
+  margin-top: 50%;
+}
