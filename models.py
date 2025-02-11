@@ -12,7 +12,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
-    email = db.Column(db.String(255), unique=True)
+    email = db.Column(db.String(255), unique=False)
     password = db.Column(db.String(255))
     book = db.relationship("Copy", backref="issue", lazy=True)
     admin_num = db.Column(db.Integer, nullable=True)
@@ -32,7 +32,7 @@ class Book(db.Model):
 class Copy(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_added = db.Column(db.DateTime(), default=datetime.utcnow)
-    issued_by = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=True, default=None)
+    issued_by = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, default=None)
     date_issued = db.Column(db.DateTime(), default=None)
     date_return = db.Column(db.DateTime(), default=None)
     book = db.Column(db.Integer, db.ForeignKey("book.id"))

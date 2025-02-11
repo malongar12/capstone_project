@@ -1,17 +1,14 @@
-from flask import Flask, render_template, flash, redirect, session, request, url_for
+from flask import Flask, render_template, flash, redirect, session, request
 from form import signupForm, loginForm, addBook, AdminSignupForm, admin_loginForm
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from models import Book, db, User, Copy
 from models import connect_db
-from datetime import datetime, date, timedelta
+from datetime import datetime,  timedelta
 from secret import SECRET_KEY
 
 bcrypt = Bcrypt()
 app = Flask(__name__)
 
-# app.app_context().push()
-# db.create_all()
 
 app.config["SECRET_KEY"] = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:malongar12@localhost:5432/library_db"
@@ -39,11 +36,17 @@ def signup():
         password = form.password.data
 
         validUser = User.query.filter_by(email=email).first()
-
-        if validUser:
+        
+        if validUser: 
+           
+            if validUser.admin_num is None:
 
                 flash("email already taken")
                 return redirect("/signup")
+            
+            if validUser.admin_num is not None:
+                flash("email already taken")
+                return redirect("/admin/login")
 
         elif  " " in password or " " in firstname or " " in lastname or " " in email:
                 flash("Password, firstname, lastname, and email cannot contain any spaces")
@@ -71,6 +74,10 @@ def signup():
 @app.route("/login",  methods=["GET", "POST"])
 def login():
     form = loginForm()
+    
+    if "admin_num" in session:
+        
+        return redirect("/admin/dashboard")
 
     if form.validate_on_submit():
         email = form.email.data
@@ -116,6 +123,16 @@ def admin_signup():
             email = form.email.data
             password = form.password.data
             admin_num = int(form.Admin.data)
+            
+            
+            isValid_email = User.query.filter_by(email=email).first()
+            
+            if isValid_email:
+                
+                if isValid_email.admin_num is not None:
+                    flash("email associate with another admin")
+            
+            
 
             is_Valid_admin = User.query.filter_by(admin_num=admin_num).first()
 
@@ -293,24 +310,26 @@ def delete_book(id):
 @app.route("/book/<int:id>/issue", methods=["GET", "POST"])
 def check_out(id):
        book_id = Book.query.get_or_404(id)
+       
+       
        user = session.get("user-id")
-
-       if "user-id" not in session:
+       
+       if not user:
            flash("please login to checkout a book")
 
            return redirect(f"/book/{id}")
        
        
-       issued_book = Copy.query.filter_by(issued_by=user).first()
-       if issued_book:
-             flash("You can only borrow one book at a time.")
+       issued_book = Copy.query.filter_by(issued_by=user).count()
+       if issued_book >= 3:
+             flash("You can only borrow up to 3 books at a time.")
              return redirect(f"/book/{id}")
 
        if book_id:
 
            if book_id.present_copy > 0:
-                copy = Copy(issued_by=session.get("user-id"), date_issued=datetime.now(),
-                   date_return=datetime.now() + timedelta(days=7), book=book_id.id)
+                copy = Copy(issued_by=user, date_issued=datetime.now(),
+                        date_return=datetime.now() + timedelta(days=7), book=book_id.id)
 
                 book_id.present_copy -= 1
                 book_id.issued_copy += 1
@@ -330,13 +349,13 @@ def check_out(id):
 
 @app.route("/book/issued/view")
 def issued_book_info():
-
+    
     if "user-id" not in session:
 
         return redirect("/")
 
-    book_1 = Copy.query.filter_by(issued_by=session.get("user-id")).first()
-
+    book_1 = Copy.query.filter_by(issued_by=session.get("user-id")).all()
+    
     return render_template("book/issued_book_info.html", book_1=book_1)
 
 
